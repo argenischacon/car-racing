@@ -74,6 +74,7 @@ public class Race extends JFrame{
         gbc.insets = new Insets(10, 10, 10, 10);
         JToggleButton btnRedCar = new JToggleButton();
         btnRedCar.setPreferredSize(new Dimension(150, 150));
+        btnRedCar.addActionListener(getActionListener(SelectableCars.RED_CAR));
         panelPrincipal.add(btnRedCar, gbc);
         
         //Boton del auto verde
@@ -86,6 +87,7 @@ public class Race extends JFrame{
         gbc.insets = new Insets(10, 10, 10, 10);
         JToggleButton btnGreenCar = new JToggleButton();
         btnGreenCar.setPreferredSize(new Dimension(150, 150));
+        btnGreenCar.addActionListener(getActionListener(SelectableCars.GREEN_CAR));
         panelPrincipal.add(btnGreenCar, gbc);
         
         //Boton del auto azul
@@ -98,6 +100,7 @@ public class Race extends JFrame{
         gbc.insets = new Insets(10, 10, 10, 10);
         JToggleButton btnBlueCar = new JToggleButton();
         btnBlueCar.setPreferredSize(new Dimension(150, 150));
+        btnBlueCar.addActionListener(getActionListener(SelectableCars.BLUE_CAR));
         panelPrincipal.add(btnBlueCar, gbc);
         
         //Grupo de botones (ButtonGroup)
