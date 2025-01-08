@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +19,7 @@ import javax.swing.JToggleButton;
 
 public class Race extends JFrame{
     
+    private SelectableCars selectedCar = null;
     public Race(){
         initComponents();
         
@@ -141,5 +144,16 @@ public class Race extends JFrame{
         this.add(panelPrincipal);
     }
     
+    private ActionListener getActionListener(SelectableCars car){
+        
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedCar = car;
+            }
+        };
+        
+        return actionListener;
+    }
     
 }
