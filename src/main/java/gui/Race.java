@@ -15,15 +15,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import logica.BlueCar;
+import logica.GreenCar;
+import logica.RedCar;
 
 
 public class Race extends JFrame{
     
     private SelectableCars selectedCar = null;
-    private final int STARTING_POSITION = 680, CAR_WIDTH = 50, CAR_HEIGHT = 100,
+    public final static int STARTING_POSITION = 680, CAR_WIDTH = 50, CAR_HEIGHT = 100,
           LANE_RED_CAR = 50, LANE_GREEN_CAR = 190, LANE_BLUE_CAR = 330;  
+    private JLabel lblRedCar, lblGreenCar, lblBlueCar;
+    private RedCar redCar;
+    private GreenCar greenCar;
+    private BlueCar blueCar;
+    
+    
     public Race(){
         initComponents();
+        redCar = new RedCar(lblRedCar);
+        blueCar = new BlueCar(lblBlueCar);
+        greenCar = new GreenCar(lblGreenCar);
+        initThreads();
         
         //establecemos la configuracion de la ventana
         pack();
@@ -125,19 +138,19 @@ public class Race extends JFrame{
         lblTrack.setBackground(Color.BLACK);
         
         //Labels para los autos (JLabel)
-        JLabel lblRedCar = new JLabel();
+        lblRedCar = new JLabel();
         lblRedCar.setBounds(LANE_RED_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
         lblRedCar.setOpaque(true);
         lblRedCar.setBackground(Color.red);
         lblTrack.add(lblRedCar);
         
-        JLabel lblGreenCar = new JLabel();
+        lblGreenCar = new JLabel();
         lblGreenCar.setBounds(LANE_GREEN_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
         lblGreenCar.setOpaque(true);
         lblGreenCar.setBackground(Color.GREEN);
         lblTrack.add(lblGreenCar);
         
-        JLabel lblBlueCar = new JLabel();
+        lblBlueCar = new JLabel();
         lblBlueCar.setBounds(LANE_BLUE_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
         lblBlueCar.setOpaque(true);
         lblBlueCar.setBackground(Color.BLUE);
@@ -160,5 +173,12 @@ public class Race extends JFrame{
         
         return actionListener;
     }
-    
+
+    private void initThreads() {
+        //Instanciar los hilos
+        redCar.start();
+        greenCar.start();
+        blueCar.start();
+    }
+   
 }
