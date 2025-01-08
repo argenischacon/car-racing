@@ -20,9 +20,8 @@ import javax.swing.JToggleButton;
 public class Race extends JFrame{
     
     private SelectableCars selectedCar = null;
-    private final int STARTING_POSITION = 680;
-    private final int CAR_WIDTH = 50;
-    private final int CAR_HEIGHT = 100;  
+    private final int STARTING_POSITION = 680, CAR_WIDTH = 50, CAR_HEIGHT = 100,
+          LANE_RED_CAR = 50, LANE_GREEN_CAR = 190, LANE_BLUE_CAR = 330;  
     public Race(){
         initComponents();
         
@@ -127,19 +126,19 @@ public class Race extends JFrame{
         
         //Labels para los autos (JLabel)
         JLabel lblRedCar = new JLabel();
-        lblRedCar.setBounds(50, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
+        lblRedCar.setBounds(LANE_RED_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
         lblRedCar.setOpaque(true);
         lblRedCar.setBackground(Color.red);
         lblTrack.add(lblRedCar);
         
         JLabel lblGreenCar = new JLabel();
-        lblGreenCar.setBounds(190, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
+        lblGreenCar.setBounds(LANE_GREEN_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
         lblGreenCar.setOpaque(true);
         lblGreenCar.setBackground(Color.GREEN);
         lblTrack.add(lblGreenCar);
         
         JLabel lblBlueCar = new JLabel();
-        lblBlueCar.setBounds(330, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
+        lblBlueCar.setBounds(LANE_BLUE_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
         lblBlueCar.setOpaque(true);
         lblBlueCar.setBackground(Color.BLUE);
         lblTrack.add(lblBlueCar);
