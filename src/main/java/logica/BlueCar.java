@@ -35,7 +35,7 @@ public class BlueCar extends Thread{
     public void run() {
         int numeroRandom = numeroRandom();
         
-        for (int i = Race.STARTING_POSITION; i < 0; i--) {
+        for (int i = Race.STARTING_POSITION; i > 0; i--) {
             lblBlueCar.setLocation(Race.LANE_BLUE_CAR, i);
             positionY--;
             launchEvent();

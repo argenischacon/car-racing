@@ -35,7 +35,7 @@ public class RedCar extends Thread{
     public void run() {
         int numeroRandom = numeroRandom();
         
-        for (int i = Race.STARTING_POSITION; i < 0; i--) {
+        for (int i = Race.STARTING_POSITION; i > 0; i--) {
             lblRedCar.setLocation(Race.LANE_RED_CAR, i);
             positionY--;
             launchEvent();
@@ -58,9 +58,5 @@ public class RedCar extends Thread{
         int numeroRandom = random.nextInt(30-10+1)+10;
         return numeroRandom;
     }
-    
-    
-    
-    
-    
+
 }

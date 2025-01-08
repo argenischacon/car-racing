@@ -35,7 +35,7 @@ public class GreenCar extends Thread{
     public void run() {
         int numeroRandom = numeroRandom();
         
-        for (int i = Race.STARTING_POSITION; i < 0; i--) {
+        for (int i = Race.STARTING_POSITION; i > 0; i--) {
             lblGreenCar.setLocation(Race.LANE_GREEN_CAR, i);
             positionY--;
             launchEvent();
