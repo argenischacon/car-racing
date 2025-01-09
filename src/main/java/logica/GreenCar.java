@@ -16,7 +16,7 @@ public class GreenCar extends Thread {
     private JLabel lblGreenCar;
 
     public GreenCar(JLabel lblGreenCar) {
-        super(SelectableCars.RED_CAR.name());
+        super(SelectableCars.GREEN_CAR.name());
         this.lblGreenCar = lblGreenCar;
         positionY = Race.STARTING_POSITION;
     }
