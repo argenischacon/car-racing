@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,8 +69,11 @@ public class Race extends JFrame {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
-        btnStart = new JButton("Start");
+        btnStart = new JButton();
         btnStart.setPreferredSize(new Dimension(150, 150));
+        btnStart.setIcon(new ImageIcon(iconFlag.getImage().getScaledInstance
+            ((int)btnStart.getPreferredSize().getWidth(),
+                    (int)btnStart.getPreferredSize().getHeight(), Image.SCALE_SMOOTH)));
         btnStart.addActionListener(ActionListenerForStartButton());
         panelPrincipal.add(btnStart, gbc);
 
@@ -98,6 +102,7 @@ public class Race extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         btnRedCar = new JToggleButton();
         btnRedCar.setPreferredSize(new Dimension(150, 150));
+        btnRedCar.setIcon(new ImageIcon(iconRedCar.getImage().getScaledInstance(70, 130, Image.SCALE_SMOOTH)));
         btnRedCar.addActionListener(getActionListener(SelectableCars.RED_CAR));
         panelPrincipal.add(btnRedCar, gbc);
 
@@ -111,6 +116,7 @@ public class Race extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         btnGreenCar = new JToggleButton();
         btnGreenCar.setPreferredSize(new Dimension(150, 150));
+        btnGreenCar.setIcon(new ImageIcon(iconGreenCar.getImage().getScaledInstance(70, 130, Image.SCALE_SMOOTH)));
         btnGreenCar.addActionListener(getActionListener(SelectableCars.GREEN_CAR));
         panelPrincipal.add(btnGreenCar, gbc);
 
@@ -124,6 +130,7 @@ public class Race extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         btnBlueCar = new JToggleButton();
         btnBlueCar.setPreferredSize(new Dimension(150, 150));
+        btnBlueCar.setIcon(new ImageIcon(iconBlueCar.getImage().getScaledInstance(70, 130, Image.SCALE_SMOOTH)));
         btnBlueCar.addActionListener(getActionListener(SelectableCars.BLUE_CAR));
         panelPrincipal.add(btnBlueCar, gbc);
 
