@@ -37,6 +37,8 @@ public class Race extends JFrame {
     private GreenCar greenCar;
     private BlueCar blueCar;
     private ButtonGroup group;
+    private JToggleButton btnRedCar, btnGreenCar, btnBlueCar;
+
     public Race() {
         initComponents();
 
@@ -90,7 +92,7 @@ public class Race extends JFrame {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
-        JToggleButton btnRedCar = new JToggleButton();
+        btnRedCar = new JToggleButton();
         btnRedCar.setPreferredSize(new Dimension(150, 150));
         btnRedCar.addActionListener(getActionListener(SelectableCars.RED_CAR));
         panelPrincipal.add(btnRedCar, gbc);
@@ -103,7 +105,7 @@ public class Race extends JFrame {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
-        JToggleButton btnGreenCar = new JToggleButton();
+        btnGreenCar = new JToggleButton();
         btnGreenCar.setPreferredSize(new Dimension(150, 150));
         btnGreenCar.addActionListener(getActionListener(SelectableCars.GREEN_CAR));
         panelPrincipal.add(btnGreenCar, gbc);
@@ -116,7 +118,7 @@ public class Race extends JFrame {
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.insets = new Insets(10, 10, 10, 10);
-        JToggleButton btnBlueCar = new JToggleButton();
+        btnBlueCar = new JToggleButton();
         btnBlueCar.setPreferredSize(new Dimension(150, 150));
         btnBlueCar.addActionListener(getActionListener(SelectableCars.BLUE_CAR));
         panelPrincipal.add(btnBlueCar, gbc);
@@ -151,36 +153,35 @@ public class Race extends JFrame {
         panelRacePositions.setBackground(Color.PINK);
         panelRacePositions.setPreferredSize(new Dimension(300, 50));
         panelDerecho.add(panelRacePositions, gbc);
-        
+
         //Labels para las posiciones
         gbc.gridx = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(5, 5, 5, 5);
-        
+
         gbc.anchor = GridBagConstraints.CENTER;
         JLabel lblRedCarPosition = new JLabel("RC", SwingConstants.CENTER);
         lblRedCarPosition.setOpaque(true);
         lblRedCarPosition.setBackground(Color.ORANGE);
         lblRedCarPosition.setPreferredSize(new Dimension(50, 50));
         panelRacePositions.add(lblRedCarPosition, gbc);
-        
+
         gbc.gridx = 1;
         JLabel lblGreenCarPosition = new JLabel("GC", SwingConstants.CENTER);
         lblGreenCarPosition.setOpaque(true);
         lblGreenCarPosition.setBackground(Color.YELLOW);
         lblGreenCarPosition.setPreferredSize(new Dimension(50, 50));
         panelRacePositions.add(lblGreenCarPosition, gbc);
-        
+
         gbc.gridx = 2;
         JLabel lblBlueCarPosition = new JLabel("BC", SwingConstants.CENTER);
         lblBlueCarPosition.setOpaque(true);
         lblBlueCarPosition.setBackground(Color.WHITE);
         lblBlueCarPosition.setPreferredSize(new Dimension(50, 50));
         panelRacePositions.add(lblBlueCarPosition, gbc);
-                
- 
+
         //Label para la pista
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -247,7 +248,7 @@ public class Race extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (selectedCar != null) { //se ha seleccionado una auto
                     initThreads();
-                    btnStart.setEnabled(false);
+                    disabledNewRace();
 
                     //Referencia para el hilo que termino primero
                     final AtomicReference<Thread> hiloTerminadoPrimero = new AtomicReference<>(null);
@@ -277,31 +278,23 @@ public class Race extends JFrame {
 
                                     //aumento el contador
                                     numeroHilosTerminados.incrementAndGet();
-                                    System.out.println(numeroHilosTerminados.get());    
+                                    System.out.println(numeroHilosTerminados.get());
                                     //Verificamos si se gano
-                                    if (numeroHilosTerminados.get()== hilos.length) {
+                                    if (numeroHilosTerminados.get() == hilos.length) {
                                         //Si los 3 hilos terminaron
                                         System.out.println("3 hilos terminados");
                                         //Detemos el timer
                                         ((Timer) e.getSource()).stop();
-                                        
+
                                         if (!(hiloTerminadoPrimero.get().getName().equals(selectedCar.name()))) {
                                             JOptionPane.showMessageDialog(null, "PERDISTE");
-                                        }else{
+                                        } else {
                                             JOptionPane.showMessageDialog(null, "GANASTE");
-                                            
+
                                         }
 
-                                        //Habilitamos el boton start
-                                        btnStart.setEnabled(true);
-                                        //selectedCar
-                                        selectedCar = null;
-                                        //Posicionamos los autos
-                                        lblRedCar.setLocation(LANE_RED_CAR, STARTING_POSITION);
-                                        lblGreenCar.setLocation(LANE_GREEN_CAR, STARTING_POSITION);
-                                        lblBlueCar.setLocation(LANE_BLUE_CAR, STARTING_POSITION);
-                                        //Deseleccionar
-                                        group.clearSelection();
+                                        enableNewRace();
+
                                     }
 
                                 }
@@ -309,6 +302,7 @@ public class Race extends JFrame {
                             }
 
                         }
+
                     });
                     timer.start();
 
@@ -316,9 +310,36 @@ public class Race extends JFrame {
                     JOptionPane.showMessageDialog(panelPrincipal, "Seleccione un auto", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+
         };
 
         return actionListener;
+    }
+
+    private void disabledNewRace() {
+        
+        btnStart.setEnabled(false);
+        btnRedCar.setEnabled(false);
+        btnGreenCar.setEnabled(false);
+        btnBlueCar.setEnabled(false);
+        
+    }
+
+    private void enableNewRace() {
+        //Habilitamos el boton start
+        btnStart.setEnabled(true);
+        //selectedCar
+        selectedCar = null;
+        //Posicionamos los autos
+        lblRedCar.setLocation(LANE_RED_CAR, STARTING_POSITION);
+        lblGreenCar.setLocation(LANE_GREEN_CAR, STARTING_POSITION);
+        lblBlueCar.setLocation(LANE_BLUE_CAR, STARTING_POSITION);
+        //Deseleccionar
+        group.clearSelection();
+        //activar toggle buttons
+        btnRedCar.setEnabled(true);
+        btnGreenCar.setEnabled(true);
+        btnBlueCar.setEnabled(true);
     }
 
 }
