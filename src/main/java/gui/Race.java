@@ -8,12 +8,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,11 +39,13 @@ public class Race extends JFrame {
     private BlueCar blueCar;
     private ButtonGroup group;
     private JToggleButton btnRedCar, btnGreenCar, btnBlueCar;
+    private ImageIcon iconTrackGif, iconTrackJpg, iconRedCar, iconGreenCar, iconBlueCar, iconFlag,
+            iconFirstPlace, iconSecondPlace, iconThirdPlace;
 
     public Race() {
+        initIcons();
         initComponents();
-        URL url = getClass().getResource("/images/Bandera.png");
-        System.out.println(url);
+
         //establecemos la configuracion de la ventana
         pack();
         setSize(600, 900);
@@ -342,6 +344,18 @@ public class Race extends JFrame {
         btnRedCar.setEnabled(true);
         btnGreenCar.setEnabled(true);
         btnBlueCar.setEnabled(true);
+    }
+
+    private void initIcons() {
+        iconFlag = new ImageIcon(getClass().getResource("/images/Bandera.png"));
+        iconTrackJpg = new ImageIcon(getClass().getResource("/images/pista_estatica.jpg"));
+        iconTrackGif = new ImageIcon(getClass().getResource("/images/pista.gif"));
+        iconRedCar = new ImageIcon(getClass().getResource("/images/auto_rojo.png"));
+        iconGreenCar = new ImageIcon(getClass().getResource("/images/auto_verde.png"));
+        iconBlueCar = new ImageIcon(getClass().getResource("/images/auto_azul.png"));
+        iconFirstPlace = new ImageIcon(getClass().getResource("/images/first_place.png"));
+        iconSecondPlace = new ImageIcon(getClass().getResource("/images/second_place.png"));
+        iconThirdPlace = new ImageIcon(getClass().getResource("/images/third_place.png"));
     }
 
 }
