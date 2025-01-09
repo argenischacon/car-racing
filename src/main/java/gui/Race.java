@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -41,7 +42,8 @@ public class Race extends JFrame {
 
     public Race() {
         initComponents();
-
+        URL url = getClass().getResource("/images/Bandera.png");
+        System.out.println(url);
         //establecemos la configuracion de la ventana
         pack();
         setSize(600, 900);
