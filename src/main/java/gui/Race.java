@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import logica.BlueCar;
 import logica.GreenCar;
@@ -27,7 +28,7 @@ import logica.RedCar;
 public class Race extends JFrame {
 
     private SelectableCars selectedCar = null;
-    public final static int STARTING_POSITION = 680, CAR_WIDTH = 50, CAR_HEIGHT = 100,
+    public final static int STARTING_POSITION = 640, CAR_WIDTH = 50, CAR_HEIGHT = 100,
             LANE_RED_CAR = 50, LANE_GREEN_CAR = 190, LANE_BLUE_CAR = 330;
     private JLabel lblRedCar, lblGreenCar, lblBlueCar;
     private JPanel panelPrincipal;
@@ -126,10 +127,63 @@ public class Race extends JFrame {
         group.add(btnGreenCar);
         group.add(btnBlueCar);
 
-        //Label para la pista
+        //Panel derecho
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 5;
+        gbc.weightx = 1;//Ocupa espacio adicional en x
+        gbc.weighty = 1;//Ocupa espacio adicional en y
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        JPanel panelDerecho = new JPanel(new GridBagLayout());
+        panelPrincipal.add(panelDerecho, gbc);
+
+        //Panel para las posiciones
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        JPanel panelRacePositions = new JPanel(new GridBagLayout());
+        panelRacePositions.setBackground(Color.PINK);
+        panelRacePositions.setPreferredSize(new Dimension(300, 50));
+        panelDerecho.add(panelRacePositions, gbc);
+        
+        //Labels para las posiciones
+        gbc.gridx = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        
+        gbc.anchor = GridBagConstraints.CENTER;
+        JLabel lblRedCarPosition = new JLabel("RC", SwingConstants.CENTER);
+        lblRedCarPosition.setOpaque(true);
+        lblRedCarPosition.setBackground(Color.ORANGE);
+        lblRedCarPosition.setPreferredSize(new Dimension(50, 50));
+        panelRacePositions.add(lblRedCarPosition, gbc);
+        
+        gbc.gridx = 1;
+        JLabel lblGreenCarPosition = new JLabel("GC", SwingConstants.CENTER);
+        lblGreenCarPosition.setOpaque(true);
+        lblGreenCarPosition.setBackground(Color.YELLOW);
+        lblGreenCarPosition.setPreferredSize(new Dimension(50, 50));
+        panelRacePositions.add(lblGreenCarPosition, gbc);
+        
+        gbc.gridx = 2;
+        JLabel lblBlueCarPosition = new JLabel("BC", SwingConstants.CENTER);
+        lblBlueCarPosition.setOpaque(true);
+        lblBlueCarPosition.setBackground(Color.WHITE);
+        lblBlueCarPosition.setPreferredSize(new Dimension(50, 50));
+        panelRacePositions.add(lblBlueCarPosition, gbc);
+                
+ 
+        //Label para la pista
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         gbc.weightx = 1;//Ocupa espacio adicional en x
         gbc.weighty = 1;//Ocupa espacio adicional en y
         gbc.fill = GridBagConstraints.BOTH;
@@ -158,7 +212,7 @@ public class Race extends JFrame {
         lblBlueCar.setBackground(Color.BLUE);
         lblTrack.add(lblBlueCar);
 
-        panelPrincipal.add(lblTrack, gbc);
+        panelDerecho.add(lblTrack, gbc);
 
         //Añadimos el panel principal a la ventana
         this.add(panelPrincipal);
