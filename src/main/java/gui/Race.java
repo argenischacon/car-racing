@@ -32,7 +32,7 @@ public class Race extends JFrame {
     private SelectableCars selectedCar = null;
     public final static int STARTING_POSITION = 640, CAR_WIDTH = 50, CAR_HEIGHT = 100,
             LANE_RED_CAR = 50, LANE_GREEN_CAR = 190, LANE_BLUE_CAR = 330;
-    private JLabel lblRedCar, lblGreenCar, lblBlueCar;
+    private JLabel lblRedCar, lblGreenCar, lblBlueCar, lblTrack;
     private JPanel panelPrincipal;
     private JButton btnStart;
     private RedCar redCar;
@@ -200,28 +200,26 @@ public class Race extends JFrame {
         gbc.weighty = 1;//Ocupa espacio adicional en y
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(0, 0, 0, 0);
-        JLabel lblTrack = new JLabel();
+        lblTrack = new JLabel();
         lblTrack.setLayout(null);
+        lblTrack.setIcon(iconTrackJpg);
         lblTrack.setOpaque(true);
         lblTrack.setBackground(Color.BLACK);
 
         //Labels para los autos (JLabel)
         lblRedCar = new JLabel();
         lblRedCar.setBounds(LANE_RED_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
-        lblRedCar.setOpaque(true);
-        lblRedCar.setBackground(Color.red);
+        lblRedCar.setIcon(new ImageIcon(iconRedCar.getImage().getScaledInstance(CAR_WIDTH, CAR_HEIGHT, Image.SCALE_SMOOTH)));
         lblTrack.add(lblRedCar);
 
         lblGreenCar = new JLabel();
         lblGreenCar.setBounds(LANE_GREEN_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
-        lblGreenCar.setOpaque(true);
-        lblGreenCar.setBackground(Color.GREEN);
+        lblGreenCar.setIcon(new ImageIcon(iconGreenCar.getImage().getScaledInstance(CAR_WIDTH, CAR_HEIGHT, Image.SCALE_SMOOTH)));
         lblTrack.add(lblGreenCar);
 
         lblBlueCar = new JLabel();
         lblBlueCar.setBounds(LANE_BLUE_CAR, STARTING_POSITION, CAR_WIDTH, CAR_HEIGHT);
-        lblBlueCar.setOpaque(true);
-        lblBlueCar.setBackground(Color.BLUE);
+        lblBlueCar.setIcon(new ImageIcon(iconBlueCar.getImage().getScaledInstance(CAR_WIDTH, CAR_HEIGHT, Image.SCALE_SMOOTH)));
         lblTrack.add(lblBlueCar);
 
         panelDerecho.add(lblTrack, gbc);
@@ -329,6 +327,7 @@ public class Race extends JFrame {
 
     private void disabledNewRace() {
         
+        lblTrack.setIcon(iconTrackGif);
         btnStart.setEnabled(false);
         btnRedCar.setEnabled(false);
         btnGreenCar.setEnabled(false);
@@ -337,6 +336,8 @@ public class Race extends JFrame {
     }
 
     private void enableNewRace() {
+        //colocamos la pista estatica
+        lblTrack.setIcon(iconTrackJpg);
         //Habilitamos el boton start
         btnStart.setEnabled(true);
         //selectedCar
