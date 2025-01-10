@@ -1,6 +1,5 @@
 package logica;
 
-import gui.LocationListener;
 import gui.Race;
 import gui.SelectableCars;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import javax.swing.SwingUtilities;
 
 public class RedCar extends Thread {
 
-    private List<LocationListener> listeners = new ArrayList<>();
     private int positionY;
     private JLabel lblRedCar;
 
@@ -19,16 +17,6 @@ public class RedCar extends Thread {
         super(SelectableCars.RED_CAR.name());
         this.lblRedCar = lblRedCar;
         positionY = Race.STARTING_POSITION;
-    }
-
-    public void addLocationListener(LocationListener locationListener) {
-        listeners.add(locationListener);
-    }
-
-    public void launchEvent() {
-        for (LocationListener l : listeners) {
-            l.onLocationEvent(positionY);
-        }
     }
 
     @Override
@@ -41,7 +29,6 @@ public class RedCar extends Thread {
                 lblRedCar.setLocation(Race.LANE_RED_CAR, currentPosition);
             });
             positionY--;
-            launchEvent();
 
             if (i == Race.STARTING_POSITION / 2) {
                 numeroRandom = numeroRandom();
