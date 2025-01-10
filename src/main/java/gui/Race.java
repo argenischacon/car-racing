@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,7 +33,8 @@ public class Race extends JFrame {
     private SelectableCars selectedCar = null;
     public final static int STARTING_POSITION = 640, CAR_WIDTH = 50, CAR_HEIGHT = 100,
             LANE_RED_CAR = 50, LANE_GREEN_CAR = 190, LANE_BLUE_CAR = 330;
-    private JLabel lblRedCar, lblGreenCar, lblBlueCar, lblTrack;
+    private JLabel lblRedCar, lblGreenCar, lblBlueCar, lblTrack, lblRedCarPosition,
+            lblGreenCarPosition, lblBlueCarPosition;
     private JPanel panelPrincipal;
     private JButton btnStart;
     private RedCar redCar;
@@ -71,9 +73,8 @@ public class Race extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         btnStart = new JButton();
         btnStart.setPreferredSize(new Dimension(150, 150));
-        btnStart.setIcon(new ImageIcon(iconFlag.getImage().getScaledInstance
-            ((int)btnStart.getPreferredSize().getWidth(),
-                    (int)btnStart.getPreferredSize().getHeight(), Image.SCALE_SMOOTH)));
+        btnStart.setIcon(new ImageIcon(iconFlag.getImage().getScaledInstance((int) btnStart.getPreferredSize().getWidth(),
+                (int) btnStart.getPreferredSize().getHeight(), Image.SCALE_SMOOTH)));
         btnStart.addActionListener(ActionListenerForStartButton());
         panelPrincipal.add(btnStart, gbc);
 
@@ -174,19 +175,19 @@ public class Race extends JFrame {
         gbc.insets = new Insets(0, 5, 0, 5);
 
         gbc.anchor = GridBagConstraints.CENTER;
-        JLabel lblRedCarPosition = new JLabel();
+        lblRedCarPosition = new JLabel();
         lblRedCarPosition.setPreferredSize(new Dimension(50, 50));
         lblRedCarPosition.setHorizontalAlignment(SwingConstants.CENTER);
         panelRacePositions.add(lblRedCarPosition, gbc);
 
         gbc.gridx = 1;
-        JLabel lblGreenCarPosition = new JLabel();
+        lblGreenCarPosition = new JLabel();
         lblGreenCarPosition.setPreferredSize(new Dimension(50, 50));
         lblGreenCarPosition.setHorizontalAlignment(SwingConstants.CENTER);
         panelRacePositions.add(lblGreenCarPosition, gbc);
 
         gbc.gridx = 2;
-        JLabel lblBlueCarPosition = new JLabel();
+        lblBlueCarPosition = new JLabel();
         lblBlueCarPosition.setPreferredSize(new Dimension(50, 50));
         lblBlueCarPosition.setHorizontalAlignment(SwingConstants.CENTER);
         panelRacePositions.add(lblBlueCarPosition, gbc);
@@ -258,7 +259,8 @@ public class Race extends JFrame {
                     disabledNewRace();
 
                     //Referencia para el hilo que termino primero
-                    final AtomicReference<Thread> hiloTerminadoPrimero = new AtomicReference<>(null);
+                    //final AtomicReference<Thread> hiloTerminadoPrimero = new AtomicReference<>(null);
+                    final AtomicReferenceArray<Thread> arrayHilosTerminados = new AtomicReferenceArray<>(3);
 
                     //Contador de hilos terminados
                     final AtomicInteger numeroHilosTerminados = new AtomicInteger(0);
@@ -275,16 +277,16 @@ public class Race extends JFrame {
                             for (Thread hilo : hilos) {
 
                                 if (hilo.getState() == Thread.State.TERMINATED && !hilosTerminados.contains(hilo)) {
-                                    //registramos el hilo terminado primero
-                                    if (hiloTerminadoPrimero.get() == null) {
-                                        System.out.println(hilo.getName());
-                                        hiloTerminadoPrimero.set(hilo);
-                                    }
+
+                                    arrayHilosTerminados.set(numeroHilosTerminados.get(), hilo);
+                                    addPlaceIcon(arrayHilosTerminados, numeroHilosTerminados.get());
+
                                     //si el hilo termino lo agrego al conjunto de hilos terminados
                                     hilosTerminados.add(hilo);
 
                                     //aumento el contador
                                     numeroHilosTerminados.incrementAndGet();
+
                                     System.out.println(numeroHilosTerminados.get());
                                     //Verificamos si se gano
                                     if (numeroHilosTerminados.get() == hilos.length) {
@@ -293,7 +295,7 @@ public class Race extends JFrame {
                                         //Detemos el timer
                                         ((Timer) e.getSource()).stop();
 
-                                        if (!(hiloTerminadoPrimero.get().getName().equals(selectedCar.name()))) {
+                                        if (!(arrayHilosTerminados.get(0).getName().equals(selectedCar.name()))) {
                                             JOptionPane.showMessageDialog(null, "PERDISTE");
                                         } else {
                                             JOptionPane.showMessageDialog(null, "GANASTE");
@@ -324,13 +326,13 @@ public class Race extends JFrame {
     }
 
     private void disabledNewRace() {
-        
+
         lblTrack.setIcon(iconTrackGif);
         btnStart.setEnabled(false);
         btnRedCar.setEnabled(false);
         btnGreenCar.setEnabled(false);
         btnBlueCar.setEnabled(false);
-        
+
     }
 
     private void enableNewRace() {
@@ -350,6 +352,10 @@ public class Race extends JFrame {
         btnRedCar.setEnabled(true);
         btnGreenCar.setEnabled(true);
         btnBlueCar.setEnabled(true);
+        //quitamos los iconos de posiciones
+        lblRedCarPosition.setIcon(null);
+        lblGreenCarPosition.setIcon(null);
+        lblBlueCarPosition.setIcon(null);
     }
 
     private void initIcons() {
@@ -362,6 +368,27 @@ public class Race extends JFrame {
         iconFirstPlace = new ImageIcon(getClass().getResource("/images/first_place.png"));
         iconSecondPlace = new ImageIcon(getClass().getResource("/images/second_place.png"));
         iconThirdPlace = new ImageIcon(getClass().getResource("/images/third_place.png"));
+    }
+
+    private void addPlaceIcon(AtomicReferenceArray<Thread> arrayHilosTerminados, int place) {
+
+        for (int i = 0; i < place + 1; i++) {
+
+            if (arrayHilosTerminados.get(i).getName().equals(SelectableCars.RED_CAR.name())) {
+                lblRedCarPosition.setIcon(getPlaceIcon(i));
+            }
+            if (arrayHilosTerminados.get(i).getName().equals(SelectableCars.GREEN_CAR.name())) {
+                lblGreenCarPosition.setIcon(getPlaceIcon(i));
+            }
+            if (arrayHilosTerminados.get(i).getName().equals(SelectableCars.BLUE_CAR.name())) {
+                lblBlueCarPosition.setIcon(getPlaceIcon(i));
+            }
+        }
+    }
+
+    private ImageIcon getPlaceIcon(int place) {
+        ImageIcon icon = (place == 0) ? iconFirstPlace : (place == 1) ? iconSecondPlace : iconThirdPlace;
+        return icon;
     }
 
 }
