@@ -32,7 +32,7 @@ public class Race extends JFrame {
 
     private SelectableCars selectedCar = null;
     public final static int STARTING_POSITION = 640, CAR_WIDTH = 50, CAR_HEIGHT = 100,
-            LANE_RED_CAR = 50, LANE_GREEN_CAR = 190, LANE_BLUE_CAR = 330;
+            LANE_RED_CAR = 40, LANE_GREEN_CAR = 170, LANE_BLUE_CAR = 300;
     private JLabel lblRedCar, lblGreenCar, lblBlueCar, lblTrack, lblRedCarPosition,
             lblGreenCarPosition, lblBlueCarPosition;
     private JPanel panelPrincipal;
@@ -162,7 +162,7 @@ public class Race extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 0, 0, 0);
         JPanel panelRacePositions = new JPanel(new GridBagLayout());
-        panelRacePositions.setBackground(Color.PINK);
+        panelRacePositions.setBackground(Color.YELLOW);
         panelRacePositions.setPreferredSize(new Dimension(300, 50));
         panelRacePositions.setMinimumSize(new Dimension(300, 50));
         panelDerecho.add(panelRacePositions, gbc);
@@ -202,8 +202,7 @@ public class Race extends JFrame {
         lblTrack = new JLabel();
         lblTrack.setLayout(null);
         lblTrack.setIcon(iconTrackJpg);
-        lblTrack.setOpaque(true);
-        lblTrack.setBackground(Color.BLACK);
+        lblTrack.setHorizontalAlignment(SwingConstants.CENTER);
 
         //Labels para los autos (JLabel)
         lblRedCar = new JLabel();
@@ -287,11 +286,9 @@ public class Race extends JFrame {
                                     //aumento el contador
                                     numeroHilosTerminados.incrementAndGet();
 
-                                    System.out.println(numeroHilosTerminados.get());
                                     //Verificamos si se gano
                                     if (numeroHilosTerminados.get() == hilos.length) {
                                         //Si los 3 hilos terminaron
-                                        System.out.println("3 hilos terminados");
                                         //Detemos el timer
                                         ((Timer) e.getSource()).stop();
 
