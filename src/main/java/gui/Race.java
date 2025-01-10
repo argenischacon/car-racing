@@ -163,6 +163,7 @@ public class Race extends JFrame {
         JPanel panelRacePositions = new JPanel(new GridBagLayout());
         panelRacePositions.setBackground(Color.PINK);
         panelRacePositions.setPreferredSize(new Dimension(300, 50));
+        panelRacePositions.setMinimumSize(new Dimension(300, 50));
         panelDerecho.add(panelRacePositions, gbc);
 
         //Labels para las posiciones
@@ -170,27 +171,24 @@ public class Race extends JFrame {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(0, 5, 0, 5);
 
         gbc.anchor = GridBagConstraints.CENTER;
-        JLabel lblRedCarPosition = new JLabel("RC", SwingConstants.CENTER);
-        lblRedCarPosition.setOpaque(true);
-        lblRedCarPosition.setBackground(Color.ORANGE);
+        JLabel lblRedCarPosition = new JLabel();
         lblRedCarPosition.setPreferredSize(new Dimension(50, 50));
+        lblRedCarPosition.setHorizontalAlignment(SwingConstants.CENTER);
         panelRacePositions.add(lblRedCarPosition, gbc);
 
         gbc.gridx = 1;
-        JLabel lblGreenCarPosition = new JLabel("GC", SwingConstants.CENTER);
-        lblGreenCarPosition.setOpaque(true);
-        lblGreenCarPosition.setBackground(Color.YELLOW);
+        JLabel lblGreenCarPosition = new JLabel();
         lblGreenCarPosition.setPreferredSize(new Dimension(50, 50));
+        lblGreenCarPosition.setHorizontalAlignment(SwingConstants.CENTER);
         panelRacePositions.add(lblGreenCarPosition, gbc);
 
         gbc.gridx = 2;
-        JLabel lblBlueCarPosition = new JLabel("BC", SwingConstants.CENTER);
-        lblBlueCarPosition.setOpaque(true);
-        lblBlueCarPosition.setBackground(Color.WHITE);
+        JLabel lblBlueCarPosition = new JLabel();
         lblBlueCarPosition.setPreferredSize(new Dimension(50, 50));
+        lblBlueCarPosition.setHorizontalAlignment(SwingConstants.CENTER);
         panelRacePositions.add(lblBlueCarPosition, gbc);
 
         //Label para la pista
